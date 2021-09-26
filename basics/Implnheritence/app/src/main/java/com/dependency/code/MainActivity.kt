@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun printNames() {
         pplLst.forEach {
-            println(it.name)
+           it.printNames()
         }
     }
 
