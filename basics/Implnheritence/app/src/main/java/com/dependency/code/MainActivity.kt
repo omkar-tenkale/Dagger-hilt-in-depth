@@ -1,12 +1,12 @@
 package com.dependency.code
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.core.view.children
 import com.dependency.code.databinding.ActivityMainBinding
+import com.dependency.code.types.Musician
+import com.dependency.code.types.Student
+import com.dependency.code.types.Teacher
 import com.google.android.material.chip.Chip
 
 class MainActivity : AppCompatActivity() {
