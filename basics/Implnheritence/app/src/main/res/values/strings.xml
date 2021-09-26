@@ -4,4 +4,7 @@
     <string name="add">ADD</string>
     <string name="print_names">PRINT NAMES</string>
     <string name="clear">Clear</string>
+    <string name="student">Student</string>
+    <string name="musician">Musician</string>
+    <string name="teacher">Teacher</string>
 </resources>

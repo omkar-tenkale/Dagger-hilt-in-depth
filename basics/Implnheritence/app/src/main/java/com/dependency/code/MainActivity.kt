@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun printNames() {
         studentsList.forEach {
-            it.think()
+            it.name
         }
     }
 
