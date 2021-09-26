@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.children
 import com.dependency.code.databinding.ActivityMainBinding
+import com.dependency.code.typeAbstract.Person
 import com.dependency.code.types.Musician
 import com.dependency.code.types.Student
 import com.dependency.code.types.Teacher

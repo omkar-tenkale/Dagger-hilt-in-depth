@@ -1,4 +1,4 @@
-package com.dependency.code
+package com.dependency.code.typeAbstract
 
 abstract class Person(val name:String) {
 
