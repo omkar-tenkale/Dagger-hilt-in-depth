@@ -1,10 +1,9 @@
 package com.dependency.code.typeAbstract
 
-abstract class Person(val name:String) {
+import com.dependency.code.typeInterface.Named
 
+abstract class Person(override val name:String) : Named {
     fun printNames(){
         println(name)
     }
-
-
 }

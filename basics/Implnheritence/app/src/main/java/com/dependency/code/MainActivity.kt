@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.core.view.children
 import com.dependency.code.databinding.ActivityMainBinding
 import com.dependency.code.typeAbstract.Person
+import com.dependency.code.typeInterface.Named
+import com.dependency.code.types.Cat
 import com.dependency.code.types.Musician
 import com.dependency.code.types.Student
 import com.dependency.code.types.Teacher
@@ -14,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val pplLst : ArrayList<Person> = arrayListOf()
+    private val pplLst : ArrayList<Named> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +55,8 @@ class MainActivity : AppCompatActivity() {
                     }
                     type.equals(resources.getString(R.string.teacher),true) -> {
                         pplLst.add(Teacher(name))
+                    }else -> {
+                    pplLst.add(Cat(name))
                     }
                 }
             }
@@ -60,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun printNames() {
         pplLst.forEach {
-           it.printNames()
+            println(it.name)
         }
     }
 
