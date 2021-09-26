@@ -11,16 +11,28 @@
 
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/edtTxtPersonName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="@string/enter_name" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button"
+        android:id="@+id/btnAddName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPrintNames"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/print_names" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnClearNames"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/clear" />
 
 </LinearLayout>

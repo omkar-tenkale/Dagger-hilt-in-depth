@@ -2,4 +2,6 @@
     <string name="app_name">Code</string>
     <string name="enter_name">Enter Name</string>
     <string name="add">ADD</string>
+    <string name="print_names">PRINT NAMES</string>
+    <string name="clear">Clear</string>
 </resources>

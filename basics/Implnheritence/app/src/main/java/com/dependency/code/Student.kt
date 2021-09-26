@@ -9,5 +9,5 @@ class Student(val name:String) {
     fun think(){
         println("$name is thinking")
     }
-    
+
 }
