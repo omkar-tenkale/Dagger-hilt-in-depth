@@ -8,3 +8,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "code"
 include ':app'
+include ':libs'
+include ':libs:ui'
+include ':libs:ui:navigation'

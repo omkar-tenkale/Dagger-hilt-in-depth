@@ -1,20 +1,22 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
 }
-apply from: '../versions.gradle'
+
+apply from: '../../../versions.gradle'
+
 
 android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.example.code"
         minSdk 21
         targetSdk 31
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -34,30 +36,11 @@ android {
 
 dependencies {
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-
-    // Support Libraries
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
-    implementation "com.google.android.material:material:$material_version"
     implementation "androidx.core:core-ktx:$ktx_extension_version"
-
-    // Network Apis
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_gson_converter_version"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_rx2_adapter_version"
-
-    // Location Rx implementation
-    //implementation project(path: ':libs:location:rx')
-
-    // Navigation utility
-    implementation project(path: ':libs:ui:navigation')
-
-    // Testing Dependencies
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "com.google.android.material:material:$material_version"
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
+
 }
