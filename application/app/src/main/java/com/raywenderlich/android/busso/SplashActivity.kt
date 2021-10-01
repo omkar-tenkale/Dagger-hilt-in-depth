@@ -36,11 +36,13 @@ class SplashActivity : AppCompatActivity() {
     private const val LOCATION_PERMISSION_REQUEST_ID = 1
   }
 
+  private lateinit var navigator: Navigator
+
   private val handler = Handler()
   private val disposables = CompositeDisposable()
   private lateinit var locationManager: LocationManager
   private lateinit var locationObservable: Observable<LocationEvent>
-  private lateinit var navigator: Navigator
+
 
   private val permissionChecker = object : GeoLocationPermissionChecker {
     override val isPermissionGiven: Boolean
@@ -54,8 +56,11 @@ class SplashActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     makeFullScreen()
     setContentView(R.layout.activity_splash)
+    // Get the reference to LocationManager using getSystemService()
     locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    // This will provide location events later, But for now we are checking the location permission
     locationObservable = provideRxLocationObservable(locationManager, permissionChecker)
+    // Instantiate NavigatorImpl, passing reference to Activity as primary constructor parameter
     navigator = NavigatorImpl(this)
   }
 
