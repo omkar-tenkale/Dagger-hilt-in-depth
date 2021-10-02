@@ -1,10 +1,30 @@
 package com.example.code
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.example.code.libs.location.api.model.LocationEvent
+import com.example.code.libs.location.api.model.LocationPermissionGranted
+import com.example.code.libs.location.api.model.LocationPermissionRequest
+import com.example.code.libs.location.api.permission.GeoLocationPermissionChecker
+import com.example.code.libs.rx.provideRxLocationObservable
+import com.example.code.libs.ui.navigation.ActivityIntentDestination
+import com.example.code.libs.ui.navigation.Navigator
+import com.example.code.libs.ui.navigation.NavigatorImpl
 
 import com.example.code.libs.ui.statusbar.MakeFullScreen
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -13,11 +33,90 @@ import com.example.code.libs.ui.statusbar.MakeFullScreen
  */
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
+
+    companion object {
+        private const val DELAY_MILLIS = 1000L
+        private const val LOCATION_PERMISSION_REQUEST_ID = 1
+    }
+
+    private lateinit var navigator: Navigator
+    private lateinit var locationManager: LocationManager
+    private lateinit var locationObservable: Observable<LocationEvent>
+
+    private val disposables = CompositeDisposable()
+
+    // We check here if the permission is given
+    private val permissionChecker = object : GeoLocationPermissionChecker {
+        override val isPermissionGiven: Boolean
+            get() =  ContextCompat.checkSelfPermission(
+                this@SplashActivity,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MakeFullScreen().hideAllVersionsOfStatusBar(window,supportActionBar)
         setContentView(R.layout.activity_splash)
 
+        // Get the reference to LocationManager using getSystemService()
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        // This will provide location events later, But for now we are checking the location permission
+        locationObservable = provideRxLocationObservable(locationManager, permissionChecker)
+        // Instantiate NavigatorImpl, passing reference to Activity as primary constructor parameter
+        navigator = NavigatorImpl(this)
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        disposables.add(
+            locationObservable
+                .delay(DELAY_MILLIS, TimeUnit.MILLISECONDS)
+                .filter(::isPermissionEvent)
+                .subscribe(::handlePermissionRequest, ::handleError)
+        )
+    }
+
+    private fun handlePermissionRequest(locationEvent: LocationEvent?) {
+        when (locationEvent) {
+            is LocationPermissionRequest -> requestLocationPermission()
+            is LocationPermissionGranted -> goToMain()
+            else -> throw IllegalStateException("You should never receive this!")
+        }
+    }
+
+    private fun goToMain() =
+        Handler(Looper.myLooper()!!).post {
+            navigator.navigateTo(
+                ActivityIntentDestination(Intent(this, MainActivity::class.java)))
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            finish()
+        }
+
+    private fun requestLocationPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+        ) {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_ID)
+            // Show an explanation to the user *asynchronously* -- don't block
+            // this thread waiting for the user's response! After the user
+            // sees the explanation, try again to request the permission.
+        } else {
+            // No explanation needed, we can request the permission.
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_ID)
+        }
+    }
+
+
+    private fun handleError(error: Throwable) {
+
+    }
+
+    private fun isPermissionEvent(locationEvent: LocationEvent): Boolean {
+        return locationEvent is LocationPermissionRequest || locationEvent is LocationPermissionGranted
     }
 
 
