@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="code.app" target="11" />
+      <module name="code.libs.location.rx" target="11" />
+      <module name="code.libs.ui.navigation" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
