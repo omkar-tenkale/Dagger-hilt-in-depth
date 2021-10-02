@@ -6,10 +6,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.code.libs.location.api.model.LocationEvent
@@ -20,7 +20,6 @@ import com.example.code.libs.rx.provideRxLocationObservable
 import com.example.code.libs.ui.navigation.ActivityIntentDestination
 import com.example.code.libs.ui.navigation.Navigator
 import com.example.code.libs.ui.navigation.NavigatorImpl
-
 import com.example.code.libs.ui.statusbar.MakeFullScreen
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -48,7 +47,7 @@ class SplashActivity : AppCompatActivity() {
     // We check here if the permission is given
     private val permissionChecker = object : GeoLocationPermissionChecker {
         override val isPermissionGiven: Boolean
-            get() =  ContextCompat.checkSelfPermission(
+            get() = ContextCompat.checkSelfPermission(
                 this@SplashActivity,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
@@ -56,7 +55,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MakeFullScreen().hideAllVersionsOfStatusBar(window,supportActionBar)
+        MakeFullScreen().hideAllVersionsOfStatusBar(window, supportActionBar)
         setContentView(R.layout.activity_splash)
 
         // Get the reference to LocationManager using getSystemService()
@@ -89,24 +88,31 @@ class SplashActivity : AppCompatActivity() {
     private fun goToMain() =
         Handler(Looper.myLooper()!!).post {
             navigator.navigateTo(
-                ActivityIntentDestination(Intent(this, MainActivity::class.java)))
+                ActivityIntentDestination(Intent(this, MainActivity::class.java))
+            )
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
         }
 
     private fun requestLocationPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
         ) {
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_ID)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_ID
+            )
             // Show an explanation to the user *asynchronously* -- don't block
             // this thread waiting for the user's response! After the user
             // sees the explanation, try again to request the permission.
         } else {
             // No explanation needed, we can request the permission.
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_ID)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_ID
+            )
         }
     }
 
@@ -119,5 +125,25 @@ class SplashActivity : AppCompatActivity() {
         return locationEvent is LocationPermissionRequest || locationEvent is LocationPermissionGranted
     }
 
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            LOCATION_PERMISSION_REQUEST_ID -> {
+                // If request is cancelled, the result arrays are empty.
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // Permission granted! We go on!
+                    goToMain()
+                } else {
+                    // Request denied, we request again
+                    requestLocationPermission()
+                }
+            }
+        }
+    }
 
 }
