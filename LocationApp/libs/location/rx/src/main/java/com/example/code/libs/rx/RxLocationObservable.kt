@@ -9,6 +9,8 @@ import io.reactivex.Observable
 
 /**
  * At this point we always assume, permission is always available
+ *
+ * NOTE: this observable completes once only when permission is given
  */
 @SuppressLint("MissingPermission")
 fun provideRxLocationObservable(
