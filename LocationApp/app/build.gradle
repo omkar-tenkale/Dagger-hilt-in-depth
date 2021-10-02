@@ -51,7 +51,7 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_rx2_adapter_version"
 
     // Location Rx implementation
-    //implementation project(path: ':libs:location:rx')
+    implementation project(path: ':libs:location:rx')
 
     // Navigation utility
     implementation project(path: ':libs:ui:navigation')
