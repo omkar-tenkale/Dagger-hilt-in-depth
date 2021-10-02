@@ -38,6 +38,7 @@ fun provideRxLocationObservable(
       } else {
         emitter.onNext(LocationNotAvailable(provider))
       }
+
       locationManager.requestLocationUpdates(
         provider,
         minTime,
@@ -73,6 +74,7 @@ fun provideRxLocationObservable(
           }
 
         })
+
     } else {
       // If the permission is not given we need to generate a request for permission and then complete
       emitter.onNext(LocationPermissionRequest(provider))
