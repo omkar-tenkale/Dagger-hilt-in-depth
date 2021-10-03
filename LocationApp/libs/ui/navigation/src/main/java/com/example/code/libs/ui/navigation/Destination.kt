@@ -17,6 +17,8 @@ data class ActivityIntentDestination(val intent: Intent) : Destination()
 
 /**
  * This is the Destination of a navigation between Fragments
+ * @param fragment - Name of the fragment destination
+ * @param anchorId - Container id of the fragment
  */
 data class FragmentDestination<out T : Fragment>(
     val fragment: T,

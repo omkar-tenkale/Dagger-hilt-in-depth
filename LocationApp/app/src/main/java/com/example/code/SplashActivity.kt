@@ -77,6 +77,11 @@ class SplashActivity : AppCompatActivity() {
         )
     }
 
+    override fun onStop() {
+        disposables.clear()
+        super.onStop()
+    }
+
     private fun handlePermissionRequest(locationEvent: LocationEvent?) {
         when (locationEvent) {
             is LocationPermissionRequest -> requestLocationPermission()

@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/bus_stop_indicator_bg.xml" value="0.21481481481481482" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.13576494427558258" />
+        <entry key="app/src/main/res/layout/busstop_list_item_layout.xml" value="0.1716485507246377" />
+        <entry key="app/src/main/res/layout/fragment_busstop_layout.xml" value="0.1716485507246377" />
       </map>
     </option>
   </component>
