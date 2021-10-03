@@ -20,6 +20,8 @@ import com.example.code.libs.ui.navigation.Navigator
 import com.example.code.libs.ui.navigation.NavigatorImpl
 import com.example.code.network.provideBussoEndPoint
 import com.example.code.ui.events.OnItemSelectedListener
+import com.example.code.ui.view.busarrival.BusArrivalFragment
+import com.example.code.ui.view.busarrival.BusArrivalFragment.Companion.BUS_STOP_ID
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -48,7 +50,7 @@ class BusStopFragment : Fragment(){
         BusStopListAdapter(object :
             OnItemSelectedListener<BusStopViewModel> {
             override fun invoke(pos: Int, busStopViewModel: BusStopViewModel) {
-               /* navigator.navigateTo(
+                navigator.navigateTo(
                     FragmentFactoryDestination(
                         fragmentFactory = { bundle ->
                             BusArrivalFragment().apply {
@@ -61,7 +63,7 @@ class BusStopFragment : Fragment(){
                             BUS_STOP_ID to busStopViewModel.stopId
                         )
                     )
-                )*/
+                )
             }
         })
 
