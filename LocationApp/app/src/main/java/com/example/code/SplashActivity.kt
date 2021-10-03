@@ -51,7 +51,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         MakeFullScreen().hideAllVersionsOfStatusBar(window, supportActionBar)
         setContentView(R.layout.activity_splash)
-        
+
         locationObservable = lookUp(LOCATION_OBSERVABLE) // HERE
         // Instantiate NavigatorImpl, passing reference to Activity as primary constructor parameter
         navigator = NavigatorImpl(this)

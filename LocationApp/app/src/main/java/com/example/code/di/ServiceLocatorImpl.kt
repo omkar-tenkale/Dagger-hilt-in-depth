@@ -6,12 +6,18 @@ import android.location.LocationManager
 import com.example.code.libs.rx.provideRxLocationObservable
 import com.example.code.permission.GeoLocationPermissionCheckerImpl
 
+/** In a world without Dagger and Hilt, Service locator pattern helps us to create objects in a
+ * Single place in the code and helps to get that reference with a look up operation,
+ * The look up operation uses simple naming convention to identify the proper references */
+
+
 /**
  * Names of the look up
  */
 const val LOCATION_MANAGER = "LocationManager"
 const val GEO_PERMISSION_CHECKER = "GeoPermissionChecker"
 const val LOCATION_OBSERVABLE = "LocationObservable"
+
 
 class ServiceLocatorImpl(
     val context: Context
