@@ -12,6 +12,7 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.code.di.LOCATION_MANAGER
 import com.example.code.libs.location.api.model.LocationEvent
 import com.example.code.libs.location.api.model.LocationPermissionGranted
 import com.example.code.libs.location.api.model.LocationPermissionRequest
@@ -39,7 +40,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private lateinit var navigator: Navigator
-    private lateinit var locationManager: LocationManager
+    //private lateinit var locationManager: LocationManager
     private lateinit var locationObservable: Observable<LocationEvent>
 
     private val disposables = CompositeDisposable()
@@ -59,7 +60,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         // Get the reference to LocationManager using getSystemService()
-        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager: LocationManager = lookUp(LOCATION_MANAGER)
         // This will provide location events later, But for now we are checking the location permission
         locationObservable = provideRxLocationObservable(locationManager, permissionChecker)
         // Instantiate NavigatorImpl, passing reference to Activity as primary constructor parameter
