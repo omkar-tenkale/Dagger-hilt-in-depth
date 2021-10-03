@@ -12,7 +12,9 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.code.di.GEO_PERMISSION_CHECKER
 import com.example.code.di.LOCATION_MANAGER
+import com.example.code.di.LOCATION_OBSERVABLE
 import com.example.code.libs.location.api.model.LocationEvent
 import com.example.code.libs.location.api.model.LocationPermissionGranted
 import com.example.code.libs.location.api.model.LocationPermissionRequest
@@ -45,24 +47,12 @@ class SplashActivity : AppCompatActivity() {
 
     private val disposables = CompositeDisposable()
 
-    // We check here if the permission is given
-    private val permissionChecker = object : GeoLocationPermissionChecker {
-        override val isPermissionGiven: Boolean
-            get() = ContextCompat.checkSelfPermission(
-                this@SplashActivity,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MakeFullScreen().hideAllVersionsOfStatusBar(window, supportActionBar)
         setContentView(R.layout.activity_splash)
-
-        // Get the reference to LocationManager using getSystemService()
-        val locationManager: LocationManager = lookUp(LOCATION_MANAGER)
-        // This will provide location events later, But for now we are checking the location permission
-        locationObservable = provideRxLocationObservable(locationManager, permissionChecker)
+        
+        locationObservable = lookUp(LOCATION_OBSERVABLE) // HERE
         // Instantiate NavigatorImpl, passing reference to Activity as primary constructor parameter
         navigator = NavigatorImpl(this)
 
